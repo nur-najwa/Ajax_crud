@@ -1,0 +1,64 @@
+﻿@using Ajax_crud.Controllers
+@model IEnumerable<Ajax_crud.Models.CountryListingModel>
+
+@{
+    ViewData["Title"] = "Country";
+    string controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    CountryController controller;
+}
+
+<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action(nameof(controller.Add))'">Add</button>
+@if (Model != null && Model != null)
+{
+    <div class="row pt-2"></div>
+    @if (Model.Any())
+    {
+        <form id="theForm" asp-action="@nameof(controller.Index)" asp-controller="@controllerName" enctype="multipart/form-data" autocomplete="off" method="post">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Country ID</th>
+                        <th class="text-center">Country Code</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center" width="10%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int rowNo = 1;
+                    }
+                    @foreach (var country in Model)
+                    {                 
+                        <tr>
+                            <td class="text-center">@rowNo</td>
+                            <td class="text-center">@country.Id</td>
+                            <td class="text-center">@country.CountryCode</td>
+                            <td class="text-center">@country.Price</td>
+                            <td class="text-center">
+                                <span title="Delete" onclick="location.href='@Url.Action(nameof(controller.Delete), controllerName, new { Id = country.Id })'"><i class="bi bi-trash"></i></span>
+                                <span title="Edit" onclick="location.href='@Url.Action(nameof(controller.Edit), controllerName, new { Id = country.Id })'"><i class="bi bi-pencil-square"></i></span>
+                            </td>
+                        </tr>
+                        rowNo++;
+                    }
+                </tbody>
+            </table>
+        </form>
+    }
+    else
+    {
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="13" align="center">
+                    <div id="searchContent"><br><br><span class="noDataFound">NoDataFound</span></div>
+                </td>
+            </tr>
+        </table>
+    }
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+</script>
